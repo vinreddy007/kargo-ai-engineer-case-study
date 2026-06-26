@@ -1,0 +1,1188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kargo Media Recommendation Assistant - Case Study Deck</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #64748b;
+      --paper: #fbfcfe;
+      --panel: #ffffff;
+      --line: #d8e0ea;
+      --navy: #16324f;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --soft-blue: #eef5ff;
+      --soft-cyan: #ecfeff;
+      --soft-green: #f0fdf4;
+      --soft-amber: #fffbeb;
+      --soft-red: #fef2f2;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #e7edf5;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck-shell {
+      width: min(1180px, 100%);
+    }
+
+    .deck-frame {
+      position: relative;
+      overflow: hidden;
+      min-height: min(720px, calc(100vh - 120px));
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .slide {
+      display: none;
+      min-height: min(720px, calc(100vh - 120px));
+      padding: 46px 56px 58px;
+    }
+
+    .slide.is-active {
+      display: grid;
+      align-content: start;
+      gap: 24px;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 6px;
+      background: linear-gradient(90deg, var(--navy), var(--blue), var(--cyan), var(--green));
+    }
+
+    .slide-kicker {
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 860px;
+      color: var(--navy);
+      font-size: clamp(2.7rem, 6vw, 5.6rem);
+      font-weight: 850;
+      line-height: 0.96;
+    }
+
+    h2 {
+      max-width: 940px;
+      color: var(--navy);
+      font-size: clamp(2rem, 4vw, 3.55rem);
+      font-weight: 850;
+      line-height: 1.02;
+    }
+
+    h3 {
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .lede {
+      max-width: 850px;
+      color: #334155;
+      font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 18px;
+    }
+
+    .card.blue {
+      border-color: rgba(37, 99, 235, 0.22);
+      background: var(--soft-blue);
+    }
+
+    .card.green {
+      border-color: rgba(21, 128, 61, 0.22);
+      background: var(--soft-green);
+    }
+
+    .card.amber {
+      border-color: rgba(180, 83, 9, 0.24);
+      background: var(--soft-amber);
+    }
+
+    .card.cyan {
+      border-color: rgba(8, 145, 178, 0.24);
+      background: var(--soft-cyan);
+    }
+
+    .card.red {
+      border-color: rgba(185, 28, 28, 0.22);
+      background: var(--soft-red);
+    }
+
+    .card p,
+    .card li {
+      color: #334155;
+      font-size: 0.98rem;
+      line-height: 1.52;
+    }
+
+    .card h3 + p,
+    .card h3 + ul,
+    .card h3 + .small {
+      margin-top: 8px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin: 0.45rem 0;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      border-left: 4px solid var(--blue);
+      background: #f8fafc;
+      padding: 12px 13px;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.45rem;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 126px;
+      border: 1px solid rgba(22, 50, 79, 0.16);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px 15px;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -19px;
+      z-index: 2;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    .flow-step:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -21px;
+      z-index: 3;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid var(--blue);
+      border-right: 2px solid var(--blue);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .flow-step span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: #1d4ed8;
+      font-weight: 850;
+      margin-bottom: 10px;
+    }
+
+    .flow-step p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .architecture {
+      display: grid;
+      gap: 18px;
+    }
+
+    .arch-lane {
+      display: grid;
+      gap: 9px;
+    }
+
+    .lane-label {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: baseline;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .lane-label span {
+      color: var(--blue);
+      font-size: 0.74rem;
+      font-weight: 850;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .lane-label strong {
+      color: var(--navy);
+      font-size: 1rem;
+    }
+
+    .arch-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr) 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .arch-box {
+      min-height: 110px;
+      border: 1px solid rgba(22, 50, 79, 0.18);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+
+    .arch-box.primary {
+      border-color: rgba(37, 99, 235, 0.32);
+      background: var(--soft-blue);
+    }
+
+    .arch-box.green {
+      border-color: rgba(21, 128, 61, 0.28);
+      background: var(--soft-green);
+    }
+
+    .arch-arrow {
+      display: block;
+      position: relative;
+      width: 28px;
+      height: 2px;
+      background: var(--blue);
+      color: transparent;
+      font-size: 0;
+      justify-self: center;
+    }
+
+    .arch-arrow::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid var(--blue);
+      border-right: 2px solid var(--blue);
+      transform: translateY(-50%) rotate(45deg);
+      transform-origin: center;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      font-size: 0.92rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      border-bottom: 1px solid var(--line);
+      padding: 13px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      background: #f1f5f9;
+      color: var(--navy);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .formula {
+      display: grid;
+      gap: 10px;
+      border: 1px solid rgba(22, 50, 79, 0.14);
+      border-radius: 8px;
+      background: #0f172a;
+      color: #e5eefb;
+      padding: 18px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .formula code {
+      color: #e5eefb;
+      white-space: normal;
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .compare h3 {
+      margin-bottom: 8px;
+    }
+
+    .pros h3 {
+      color: var(--green);
+    }
+
+    .cons h3 {
+      color: var(--amber);
+    }
+
+    .callout {
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      background: var(--soft-blue);
+      color: #1e3a8a;
+      padding: 18px 20px;
+      font-size: 1.02rem;
+      line-height: 1.52;
+    }
+
+    .quote {
+      border-left: 5px solid var(--green);
+      background: #f8fafc;
+      padding: 18px 20px;
+      color: #1f2937;
+      font-size: 1.22rem;
+      line-height: 1.48;
+    }
+
+    .demo-card {
+      display: grid;
+      gap: 14px;
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 18px;
+    }
+
+    .brief {
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      border-radius: 8px;
+      background: var(--soft-blue);
+      color: #1e293b;
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .recommendation-preview {
+      border: 1px solid rgba(21, 128, 61, 0.24);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      background: var(--soft-green);
+      padding: 14px 16px;
+    }
+
+    .recommendation-preview p {
+      color: #1f2937;
+      line-height: 1.52;
+      margin: 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .timeline-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .timeline-item strong {
+      color: var(--blue);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-button {
+      border: 1px solid rgba(22, 50, 79, 0.2);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--navy);
+      cursor: pointer;
+      font-weight: 750;
+      padding: 0.62rem 0.85rem;
+    }
+
+    .nav-button:hover {
+      border-color: rgba(37, 99, 235, 0.38);
+      color: var(--blue);
+    }
+
+    .nav-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .counter {
+      color: var(--muted);
+      min-width: 86px;
+      text-align: center;
+    }
+
+    .progress {
+      overflow: hidden;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.1);
+      flex: 1;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--cyan), var(--green));
+      transition: width 160ms ease;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 10px;
+      }
+
+      .slide {
+        min-height: calc(100vh - 105px);
+        padding: 34px 24px 44px;
+      }
+
+      .grid.two,
+      .grid.three,
+      .grid.four,
+      .metric-row,
+      .compare,
+      .flow,
+      .arch-row {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-step:not(:last-child)::after,
+      .flow-step:not(:last-child)::before,
+      .arch-arrow {
+        display: none;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    @media print {
+      body {
+        display: block;
+        padding: 0;
+        background: white;
+      }
+
+      .deck-shell {
+        width: 100%;
+      }
+
+      .deck-frame {
+        border: 0;
+        box-shadow: none;
+      }
+
+      .slide {
+        display: grid !important;
+        min-height: 100vh;
+        page-break-after: always;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck-shell">
+    <div class="deck-frame" id="deck">
+      <section class="slide is-active" data-title="Title">
+        <p class="slide-kicker">Kargo AI Engineer Case Study</p>
+        <h1>Media Recommendation Assistant</h1>
+        <p class="lede">
+          A chatbot-style workflow that turns a plain-English client brief into a reviewable Kargo product or bundle recommendation.
+        </p>
+      </section>
+
+      <section class="slide" data-title="Problem">
+        <p class="slide-kicker">Problem framing</p>
+        <h2>Media strategists need fast, defensible recommendations.</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>Input is messy</h3>
+            <p>Client briefs arrive as natural language. Some are complete, while others omit KPI, budget, geo, vertical, or impression goals.</p>
+          </div>
+          <div class="card">
+            <h3>Recommendation must be auditable</h3>
+            <p>The final answer has to explain the selected product or bundle, calculated KPI benchmark, forecasted impressions, inventory fit, and rejected alternatives.</p>
+          </div>
+        </div>
+        <div class="callout">
+          The assistant should help a strategist review the answer quickly, not hide the math behind a black box.
+        </div>
+      </section>
+
+      <section class="slide" data-title="Workflow">
+        <p class="slide-kicker">User workflow</p>
+        <h2>From brief to recommendation in one review path.</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <span>1</span>
+            <h3>Paste brief</h3>
+            <p>User enters a natural-language client request.</p>
+          </div>
+          <div class="flow-step">
+            <span>2</span>
+            <h3>Parse fields</h3>
+            <p>LLM extracts advertiser, vertical, KPI, geo, budget, goal, and style.</p>
+          </div>
+          <div class="flow-step">
+            <span>3</span>
+            <h3>Clarify</h3>
+            <p>If required fields are missing, the workflow asks one focused question.</p>
+          </div>
+          <div class="flow-step">
+            <span>4</span>
+            <h3>Recommend</h3>
+            <p>Deterministic engine ranks viable products and bundles.</p>
+          </div>
+          <div class="flow-step">
+            <span>5</span>
+            <h3>Review</h3>
+            <p>UI shows setup, selected product(s), rationale, notes, and alternatives.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Architecture">
+        <p class="slide-kicker">Architecture diagram</p>
+        <h2>One request moves through two clearly separated lanes.</h2>
+        <div class="architecture">
+          <div class="arch-lane">
+            <div class="lane-label">
+              <span>Lane 1</span>
+              <strong>Language intake and orchestration</strong>
+              <em>Turns messy brief text into structured requirements.</em>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box primary">
+                <h3>Streamlit Chat UI</h3>
+                <p class="small">Brief input, clarification answers, final recommendation review, sample briefs, and start-over flow.</p>
+              </div>
+              <div class="arch-arrow">></div>
+              <div class="arch-box primary">
+                <h3>LangGraph Workflow</h3>
+                <p class="small">parse_requirements -> check_required_fields -> ask_clarification or recommend -> format_response.</p>
+              </div>
+              <div class="arch-arrow">></div>
+              <div class="arch-box primary">
+                <h3>OpenAI Parser</h3>
+                <p class="small">Structured JSON output for requirements and planning intent. No product ranking happens here.</p>
+              </div>
+            </div>
+          </div>
+          <div class="arch-lane">
+            <div class="lane-label">
+              <span>Lane 2</span>
+              <strong>Deterministic media planning</strong>
+              <em>Combines parsed requirements with CSV data to calculate, rank, and explain.</em>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box green">
+                <h3>CSV Data</h3>
+                <p class="small">product_catalog.csv, campaign_history.csv, inventory_forecaster.csv, client_briefs.json.</p>
+              </div>
+              <div class="arch-arrow">></div>
+              <div class="arch-box green">
+                <h3>Deterministic Engine</h3>
+                <p class="small">CTR, in-view, CPM math, inventory checks, ranking, bundle allocation, and rejection reasons.</p>
+              </div>
+              <div class="arch-arrow">></div>
+              <div class="arch-box green">
+                <h3>Structured Result</h3>
+                <p class="small">Recommended products, rejected alternatives, rationale, planning notes, and decision summary rows.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Data">
+        <p class="slide-kicker">Data sources</p>
+        <h2>Each file has a narrow job in the recommendation.</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Resource</th>
+              <th>Used for</th>
+              <th>Decision impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>client_briefs.json</strong></td>
+              <td>Sample plain-text user inputs.</td>
+              <td>Exercises complete briefs, missing-field clarification, and tradeoff scenarios.</td>
+            </tr>
+            <tr>
+              <td><strong>product_catalog.csv</strong></td>
+              <td>Product names, descriptions, and CPM.</td>
+              <td>CPM drives forecasted impressions for the requested budget.</td>
+            </tr>
+            <tr>
+              <td><strong>campaign_history.csv</strong></td>
+              <td>Historical impressions, clicks, and viewable impressions by product and vertical.</td>
+              <td>Calculates product benchmarks for CTR and in-view rate.</td>
+            </tr>
+            <tr>
+              <td><strong>inventory_forecaster.csv</strong></td>
+              <td>Available impressions by product, vertical, geo, and inventory confidence.</td>
+              <td>Determines whether a product has enough usable scale for budget and goals.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" data-title="Required Fields">
+        <p class="slide-kicker">Requirement extraction</p>
+        <h2>The assistant identifies or asks for the fields needed to recommend.</h2>
+        <div class="grid three">
+          <div class="card">
+            <h3>Required</h3>
+            <ul>
+              <li>Vertical: Retail, Finance, Travel, QSR, Entertainment</li>
+              <li>Primary KPI: CTR or in-view rate</li>
+              <li>Geo: US, EMEA, APAC</li>
+              <li>Budget in dollars</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Optional</h3>
+            <ul>
+              <li>Advertiser name, when available</li>
+              <li>Impression goal</li>
+              <li>Single-product or bundle intent</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <h3>Clarification behavior</h3>
+            <p>When a required field is missing, the graph stops before recommendation and asks a targeted follow-up question.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Math">
+        <p class="slide-kicker">Recommendation math</p>
+        <h2>The decision layer is deterministic and testable.</h2>
+        <div class="formula">
+          <code>CTR = clicks / impressions</code>
+          <code>In-view rate = viewable_impressions / impressions</code>
+          <code>Estimated impressions = budget / CPM * 1000</code>
+          <code>Usable inventory = available_imps * inventory_confidence</code>
+        </div>
+        <div class="grid two">
+          <div class="card">
+            <h3>Ranking</h3>
+            <p>Products are ranked by the client's primary KPI, with deterministic tie-breakers for inventory confidence, scale, CPM, and product ID.</p>
+          </div>
+          <div class="card">
+            <h3>Viability</h3>
+            <p>A product can be rejected or caveated when it cannot absorb the budget, misses an impression goal, or lacks usable inventory.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Inventory">
+        <p class="slide-kicker">Inventory risk decision</p>
+        <h2>Inventory risk is handled as confidence, not ignored.</h2>
+        <div class="grid two">
+          <div class="card green">
+            <h3>Implementation choice</h3>
+            <p>The file describes inventory_risk as a forecast confidence score from 0.0 to 1.0, where higher means more confidence. The engine treats it as inventory confidence.</p>
+            <div class="formula" style="margin-top: 14px;">
+              <code>usable inventory = available_imps * inventory_confidence</code>
+            </div>
+          </div>
+          <div class="card amber">
+            <h3>Why this is useful</h3>
+            <p>It makes scale checks conservative. A product with large available impressions but low confidence will not look as strong as the raw forecast suggests.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Bundle Logic">
+        <p class="slide-kicker">Bundle versus single product</p>
+        <h2>The engine optimizes for the brief's intent.</h2>
+        <div class="grid three">
+          <div class="card green">
+            <h3>Bundle allowed</h3>
+            <p>Default behavior. Recommend a small bundle when it improves KPI performance and budget delivery.</p>
+          </div>
+          <div class="card blue">
+            <h3>Single product preferred</h3>
+            <p>Used when the brief asks for a simple, straightforward, one-product, or clearly single recommendation.</p>
+          </div>
+          <div class="card cyan">
+            <h3>Maximize delivery</h3>
+            <p>Used when the brief explicitly asks to use the full budget, maximize scale, or spend as much as possible.</p>
+          </div>
+        </div>
+        <div class="callout">
+          The LLM infers intent, but the deterministic engine still decides which product or bundle wins.
+        </div>
+      </section>
+
+      <section class="slide" data-title="Review Experience">
+        <p class="slide-kicker">Media strategist review</p>
+        <h2>The final answer is structured for quick inspection.</h2>
+        <div class="demo-card">
+          <div class="brief">
+            Stellar Bank is a Finance advertiser running in the US with a $20,000 budget. They care most about click-through rate and want at least 800,000 impressions.
+          </div>
+          <div class="recommendation-preview">
+            <p><strong>Recommend Premium Takeover + Commerce Connect.</strong> This bundle has the strongest blended click-through rate at 1.2% and uses the full $20,000 budget.</p>
+          </div>
+          <div class="metric-row">
+            <div class="metric">
+              <strong>1.2%</strong>
+              <span>Blended CTR</span>
+            </div>
+            <div class="metric">
+              <strong>800K</strong>
+              <span>Forecasted impressions</span>
+            </div>
+            <div class="metric">
+              <strong>$20K</strong>
+              <span>Budget used</span>
+            </div>
+            <div class="metric">
+              <strong>2</strong>
+              <span>Products selected</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="card green">
+            <h3>Why this is a bundle</h3>
+            <p>The brief does not ask for one product, so the engine combines Premium Takeover and Commerce Connect to hit the impression goal while keeping the blended CTR strong.</p>
+          </div>
+          <div class="card amber">
+            <h3>Top rejected alternative</h3>
+            <p>Attention Builder forecasts more impressions as a single product, but its CTR is lower than the selected bundle: 0.8% vs. 1.2%.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Single Product Example">
+        <p class="slide-kicker">Single product example</p>
+        <h2>When the brief asks for one clear product, the engine stays focused.</h2>
+        <div class="demo-card">
+          <div class="brief">
+            Acme Shoes wants one straightforward Retail recommendation in the US with a $30,000 budget focused on click-through rate.
+          </div>
+          <div class="recommendation-preview">
+            <p><strong>Recommend Premium Takeover.</strong> It has the strongest viable CTR benchmark at 0.9% and can use the full $30,000 budget.</p>
+          </div>
+          <div class="metric-row">
+            <div class="metric">
+              <strong>0.9%</strong>
+              <span>CTR benchmark</span>
+            </div>
+            <div class="metric">
+              <strong>938K</strong>
+              <span>Forecasted impressions</span>
+            </div>
+            <div class="metric">
+              <strong>$30K</strong>
+              <span>Budget used</span>
+            </div>
+            <div class="metric">
+              <strong>941K</strong>
+              <span>Usable inventory</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="card green">
+            <h3>Why this stays single-product</h3>
+            <p>The brief says "one straightforward recommendation," so the LLM parser sets single-product intent and the deterministic engine chooses the best viable product.</p>
+          </div>
+          <div class="card amber">
+            <h3>Top rejected alternative</h3>
+            <p>Commerce Connect has higher CTR at 1.2%, but it cannot absorb the full $30,000 as a single product: 1.4M usable impressions vs. 2M needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Design Choices">
+        <p class="slide-kicker">Design choices</p>
+        <h2>Use the LLM where ambiguity lives. Use code where correctness matters.</h2>
+        <div class="grid two">
+          <div class="card blue">
+            <h3>LLM responsibilities</h3>
+            <ul>
+              <li>Parse messy brief text into structured fields.</li>
+              <li>Merge follow-up answers with existing requirements.</li>
+              <li>Infer planning intent: bundle allowed, single product, or maximize delivery.</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>Code responsibilities</h3>
+            <ul>
+              <li>Benchmark calculations and CPM math.</li>
+              <li>Inventory confidence and scale checks.</li>
+              <li>Ranking, bundle allocation, rejection reasons, and tests.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Agentic Pros Cons">
+        <p class="slide-kicker">Agentic approach discussion</p>
+        <h2>Pros and cons of agentic versus mostly programmatic.</h2>
+        <div class="compare">
+          <div class="card pros">
+            <h3>Pros of agentic / LLM-assisted</h3>
+            <ul>
+              <li>Handles natural-language briefs and incomplete phrasing.</li>
+              <li>Can infer soft intent like "straightforward recommendation."</li>
+              <li>Produces a natural clarification loop without brittle regex rules.</li>
+              <li>Can be extended to tool routing if the workflow grows.</li>
+            </ul>
+          </div>
+          <div class="card cons">
+            <h3>Cons if fully agentic</h3>
+            <ul>
+              <li>Harder to guarantee reproducible math and ranking.</li>
+              <li>More risk of hallucinated product reasoning.</li>
+              <li>Harder to unit test every decision path.</li>
+              <li>Potentially slower and more expensive for simple calculations.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          The final architecture is intentionally hybrid: agentic workflow for orchestration and parsing, deterministic Python for media planning decisions.
+        </div>
+      </section>
+
+      <section class="slide" data-title="Testing">
+        <p class="slide-kicker">Testing and validation</p>
+        <h2>Confidence comes from deterministic tests plus opt-in live checks.</h2>
+        <div class="metric-row">
+          <div class="metric">
+            <strong>65</strong>
+            <span>Tests passing</span>
+          </div>
+          <div class="metric">
+            <strong>4</strong>
+            <span>Live tests skipped by default</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>Default OpenAI calls in tests</span>
+          </div>
+          <div class="metric">
+            <strong>Many</strong>
+            <span>Synthetic brief scenarios</span>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="card">
+            <h3>Covered paths</h3>
+            <p>Data loading, benchmark math, recommendation status, bundle logic, stale capacity reason normalization, UI helper formatting, parser behavior, and workflow routing.</p>
+          </div>
+          <div class="card">
+            <h3>Live LLM tests</h3>
+            <p>OpenAI calls are opt-in via RUN_LIVE_OPENAI_TESTS=1, which keeps normal tests fast and deterministic.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Tradeoffs">
+        <p class="slide-kicker">Tradeoffs and limitations</p>
+        <h2>The implementation is practical, but intentionally scoped.</h2>
+        <div class="grid three">
+          <div class="card amber">
+            <h3>No time dimension</h3>
+            <p>Inventory has no dates or pacing. The assistant treats inventory as a static forecast because the case data does.</p>
+          </div>
+          <div class="card amber">
+            <h3>Simple benchmarks</h3>
+            <p>Benchmarks are historical aggregate rates by product and vertical. There is no seasonality or learned model.</p>
+          </div>
+          <div class="card amber">
+            <h3>Small catalog</h3>
+            <p>The planner is optimized for the given product catalog and case-study data, not a full production inventory graph.</p>
+          </div>
+        </div>
+        <div class="quote">
+          This is a case-study assistant, not an automated media buyer. It is built to make the recommendation easy to inspect.
+        </div>
+      </section>
+
+      <section class="slide" data-title="Improvements">
+        <p class="slide-kicker">Potential improvements</p>
+        <h2>What I would add next for production readiness.</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>Planning quality</h3>
+            <ul>
+              <li>Add date-aware inventory and pacing.</li>
+              <li>Allow configurable scoring weights by client goal.</li>
+              <li>Support product exclusions, must-have products, and frequency constraints.</li>
+              <li>Use strategist feedback to calibrate recommendations.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Engineering quality</h3>
+            <ul>
+              <li>Add a lightweight eval dashboard for parser failures.</li>
+              <li>Persist recommendation traces for review.</li>
+              <li>Add deployment configuration and secret management.</li>
+              <li>Export recommendation summaries to PDF or slides.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Q&A">
+        <p class="slide-kicker">Q&A</p>
+        <h2>Discussion prompts</h2>
+        <div class="grid two">
+          <div class="card blue">
+            <h3>Product and strategy</h3>
+            <ul>
+              <li>When should a bundle beat a single product?</li>
+              <li>How much should inventory confidence penalize scale?</li>
+              <li>What should a strategist be able to override?</li>
+            </ul>
+          </div>
+          <div class="card green">
+            <h3>Technical depth</h3>
+            <ul>
+              <li>Which parts should remain deterministic?</li>
+              <li>How would we evaluate parser quality?</li>
+              <li>What changes for production deployment?</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer">
+          <span>Repository includes app, workflow, README, tests, and this deck.</span>
+          <span>Use arrow keys to navigate.</span>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="controls" aria-label="Slide controls">
+      <div class="control-group">
+        <button class="nav-button" id="prev" type="button">Previous</button>
+        <button class="nav-button" id="next" type="button">Next</button>
+      </div>
+      <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+      <div class="control-group">
+        <span class="counter" id="counter">1 / 17</span>
+        <button class="nav-button" type="button" onclick="window.print()">Print / PDF</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    const counter = document.getElementById("counter");
+    const progress = document.getElementById("progress");
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("is-active", slideIndex === current);
+      });
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+      document.title = `${slides[current].dataset.title} - Kargo Case Study Deck`;
+    }
+
+    prevButton.addEventListener("click", () => showSlide(current - 1));
+    nextButton.addEventListener("click", () => showSlide(current + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

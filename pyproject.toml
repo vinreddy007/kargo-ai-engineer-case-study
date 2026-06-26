@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kargo-media-recommender"
+version = "0.1.0"
+description = "Deterministic recommendation engine for the Kargo AI Engineer case study."
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=1.0.0",
+    "openai>=2.0.0",
+    "streamlit>=1.45.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "live_openai: tests that call the live OpenAI API and require RUN_LIVE_OPENAI_TESTS=1",
+]
